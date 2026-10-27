@@ -25,12 +25,16 @@ export class FaceJump{
  constructor(){this.reset();}
  reset(){this.armed=false;this.since=null;this.lastJump=-Infinity;}
  update(pitch,roll,now,enabled){
-  if(!enabled||pitch===null||Math.abs(roll)>6*Math.PI/180){this.armed=false;this.since=null;return false;}
+  // Allow ordinary steering tilt while jumping; head roll should only reject
+  // strongly diagonal poses that make the pitch estimate unreliable.
+  if(!enabled||pitch===null||Math.abs(roll)>15*Math.PI/180){this.armed=false;this.since=null;return false;}
   // Return to resting pitch before another jump; holding the chin up cannot repeat.
   if(pitch<5*Math.PI/180){this.armed=true;this.since=null;}
-  if(!this.armed||pitch<12*Math.PI/180){this.since=null;return false;}
+  if(!this.armed||pitch<7*Math.PI/180){this.since=null;return false;}
   this.since??=now;
-  if(now-this.since<100||now-this.lastJump<900)return false;
+  // Face inference runs around 15 Hz, so even one clear sampled lift should
+  // count; a longer hold requirement can miss a quick chin movement entirely.
+  if(now-this.since<0||now-this.lastJump<1250)return false;
   this.armed=false;this.since=null;this.lastJump=now;return true;
  }
 }
