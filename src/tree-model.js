@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {mergeGeometries} from '../node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
+import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 export function buildTree(style,{detail='preview',originalFir=true}={}){
  let seed=style==='pine'?98:style==='fir'?25:11;
  const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};

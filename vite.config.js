@@ -4,7 +4,7 @@ import {realpathSync} from 'node:fs';
 // Vite 6 rejects colons anywhere in file paths. This project lives in
 // `ux:ui essentials`, so replace that check with a confined real-path guard.
 const root=realpathSync(process.cwd());
-export default defineConfig({build:{rollupOptions:{input:{game:resolve(root,'index.html')}}},server:{host:'127.0.0.1',fs:{strict:false}},plugins:[{
+export default defineConfig({base:process.env.GITHUB_ACTIONS?'./':'/downhill-ski-game/',build:{rollupOptions:{input:{game:resolve(root,'index.html')}}},server:{host:'127.0.0.1',fs:{strict:false}},plugins:[{
  name:'confine-local-files',
  configureServer(server){server.middlewares.use((req,res,next)=>{
   try{
