@@ -1,3 +1,5 @@
+https://njm02.github.io/downhill-ski-game/
+
 # DOWNHILL SKI
 
 A complete browser alpine arcade game built with JavaScript, p5.js, MediaPipe Tasks Vision, and Vite. All mountain art is procedural and original.
